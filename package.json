@@ -12,16 +12,16 @@
     "devDependencies": {
         "@types/glob": "^8.1.0",
         "@types/luxon": "^3.4.2",
-        "@types/node": "^24.0.1",
+        "@types/node": "^25.0.3",
         "typescript": "^5.3.3"
     },
     "dependencies": {
-        "@atproto/api": "^0.17.2",
+        "@atproto/api": "^0.18.9",
         "@breejs/later": "^4.2.0",
         "@retroachievements/api": "^2.1.0",
         "discord-screenshot": "github:mrTomatolegit/discord-screenshot",
         "discord.js": "^14.14.1",
-        "glob": "^11.0.0",
+        "glob": "^13.0.0",
         "jimp": "^1.6.0",
         "luxon": "^3.5.0",
         "node-cron": "^4.1.0",
