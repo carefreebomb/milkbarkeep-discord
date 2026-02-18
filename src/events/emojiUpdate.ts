@@ -11,7 +11,7 @@ export default new Event(
         if (!isFeedEnabled) return;
 
         // Create embed
-        const slotsString: string = await client.emotes.getSlotsString(guildId);
+        const slotsString: string = await client.expressions.emotes.getSlotsString(guildId);
         const embed: EmbedBuilder = new EmbedBuilder()
             .setColor("#000000")
             .setTitle(`Renamed :${newEmote.name}:`)

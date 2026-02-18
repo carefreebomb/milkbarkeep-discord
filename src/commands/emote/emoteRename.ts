@@ -31,7 +31,7 @@ export default new Command({
 
         // Check rename input
         const rename: string = args.options.getString("rename", true);
-        const isValidName: boolean = args.client.emotes.isValidName(rename);
+        const isValidName: boolean = args.client.expressions.emotes.isValidName(rename);
         if (!isValidName) {
             await args.interaction.editReply({ content: "Emote names must be 2-32 characters, no spaces, only letters, numbers, and underscores." });
             return;
@@ -39,17 +39,17 @@ export default new Command({
 
         // Check emote input
         const emoteString: string = args.options.getString("emote", true).replace(/\+/g, "");
-        const isEmote: boolean = args.client.emotes.isEmote(emoteString);
+        const isEmote: boolean = args.client.expressions.emotes.isEmote(emoteString);
         if (!isEmote) {
             await args.interaction.editReply({ content: "Please use a valid emote." });
             return;
         }
 
         // Extract emote id
-        const emote: EmoteInfo = args.client.emotes.emoteInfoFromString(emoteString);
+        const emote: EmoteInfo = args.client.expressions.emotes.emoteInfoFromString(emoteString);
 
         // Delete emote from guild
-        const op: EmoteOperation = await args.client.emotes.rename(guildId, emote.id, rename);
+        const op: EmoteOperation = await args.client.expressions.emotes.rename(guildId, emote.id, rename);
         
         // Send results
         if (!op.success) {

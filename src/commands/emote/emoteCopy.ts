@@ -33,7 +33,7 @@ export default new Command({
         const sourceArg: string = args.options.getString("source", true);
         const renameArg: string | null = args.options.getString("rename", false);
         const isPossibleMessage: boolean = args.client.messageHandler.isPossibleMessageId(sourceArg);
-        const isEmote: boolean = args.client.emotes.isEmote(sourceArg);
+        const isEmote: boolean = args.client.expressions.emotes.isEmote(sourceArg);
 
         // Process next step based on results
         let content: string = "";
@@ -53,7 +53,7 @@ export default new Command({
         }
 
         // Extract emote id and whether it is animated from the string
-        const emote: EmoteInfo = args.client.emotes.emoteInfoFromString(content, renameArg ?? undefined);
+        const emote: EmoteInfo = args.client.expressions.emotes.emoteInfoFromString(content, renameArg ?? undefined);
 
         // Get the image file as a buffer
         let buffer: Buffer;
@@ -68,7 +68,7 @@ export default new Command({
         }
 
         // Upload image to the guild
-        const op: EmoteOperation = await args.client.emotes.upload(guildId, emote.name, buffer);
+        const op: EmoteOperation = await args.client.expressions.emotes.upload(guildId, emote.name, buffer);
         
         // Send results
         if (!op.success) {

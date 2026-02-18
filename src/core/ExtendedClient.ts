@@ -17,6 +17,7 @@ import { MessageHandler } from "./MessageHandler";
 import { RetroAchievementsManager } from "../integrations/RetroAchievementsManager";
 import { Scheduler } from "./Scheduler";
 import { BlueskyManager } from "../integrations/BlueskyManager";
+import { ExpressionManager } from "./ExpressionManager";
 import { EmoteManager } from "./EmoteManager";
 import { StickerManager } from "./StickerManager";
 import { discordAppToken } from "../../data/config.json";
@@ -30,8 +31,7 @@ export class ExtendedClient extends Client {
     public scheduler: Scheduler;
     public messageHandler: MessageHandler;
     public settings: GuildSettingsManager;
-    public emotes: EmoteManager;
-    public stickers: StickerManager;
+    public expressions: ExpressionManager;
     public commands: Collection<string, CommandType> = new Collection();
     private slashCommands: ApplicationCommandDataResolvable[] = [];
 
@@ -62,8 +62,7 @@ export class ExtendedClient extends Client {
         this.scheduler = new Scheduler(this);
         this.messageHandler = new MessageHandler(this);
         this.settings = new GuildSettingsManager(this);
-        this.emotes = new EmoteManager(this);
-        this.stickers = new StickerManager(this);
+        this.expressions = new ExpressionManager(this);
         this.bsky = new BlueskyManager(this);
     }
 

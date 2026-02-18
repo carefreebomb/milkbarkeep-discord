@@ -11,7 +11,7 @@ export default new Event(
         if (!isFeedEnabled) return;
 
         // Create embed
-        const slotsString: string = await client.stickers.getSlotsString(guildId);
+        const slotsString: string = await client.expressions.stickers.getSlotsString(guildId);
         const embed: EmbedBuilder = new EmbedBuilder()
             .setColor("#000000")
             .setTitle(`Added :${sticker.name}:`)

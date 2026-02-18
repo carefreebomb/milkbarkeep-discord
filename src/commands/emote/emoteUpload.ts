@@ -38,7 +38,7 @@ export default new Command({
         }
 
         // Upload emote to guild
-        const op: EmoteOperation = await args.client.emotes.upload(guildId, emoteName, attachment.url);
+        const op: EmoteOperation = await args.client.expressions.emotes.upload(guildId, emoteName, attachment.url);
 
         // Send results
         if (!op.success) {

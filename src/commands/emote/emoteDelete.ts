@@ -26,17 +26,17 @@ export default new Command({
 
         // Check input
         const emoteString: string = args.options.getString("emote", true).replace(/\+/g, "");
-        const isEmote: boolean = args.client.emotes.isEmote(emoteString);
+        const isEmote: boolean = args.client.expressions.emotes.isEmote(emoteString);
         if (!isEmote) {
             await args.interaction.editReply({ content: "Please use a valid emote." });
             return;
         }
 
         // Extract emote id
-        const emote: EmoteInfo = args.client.emotes.emoteInfoFromString(emoteString);
+        const emote: EmoteInfo = args.client.expressions.emotes.emoteInfoFromString(emoteString);
 
         // Delete emote from guild
-        const op: EmoteOperation = await args.client.emotes.delete(guildId, emote.id);
+        const op: EmoteOperation = await args.client.expressions.emotes.delete(guildId, emote.id);
         
         // Send results
         if (!op.success) {
