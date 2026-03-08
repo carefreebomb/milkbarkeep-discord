@@ -16,15 +16,15 @@
         "typescript": "^5.3.3"
     },
     "dependencies": {
-        "@atproto/api": "^0.18.9",
+        "@atproto/api": "^0.19.3",
         "@breejs/later": "^4.2.0",
         "@retroachievements/api": "^2.1.0",
+        "croner": "^10.0.1",
         "discord-screenshot": "github:mrTomatolegit/discord-screenshot",
         "discord.js": "^14.14.1",
         "glob": "^13.0.0",
         "jimp": "^1.6.0",
         "luxon": "^3.5.0",
-        "node-cron": "^4.1.0",
         "openweathermap-ts": "^1.2.10",
         "puppeteer": "^24.4.0",
         "syllable": "^5.0.1",
