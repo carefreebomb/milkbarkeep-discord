@@ -20,7 +20,7 @@ export class RetroAchievementsApi {
 
     // #region Properties
 
-    public static readonly callDelayInMS: number = 175;
+    public static readonly callDelayInMS: number = 2000; // 175
     private static readonly gmtOffsetInMS: number = 21600000;
 
     // #region Individual Calls

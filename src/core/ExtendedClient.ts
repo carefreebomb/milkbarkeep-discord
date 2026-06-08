@@ -15,6 +15,7 @@ import { GuildSettingsManager } from "./GuildSettingsManager";
 import { Logger } from "./Logger";
 import { MessageHandler } from "./MessageHandler";
 import { RetroAchievementsManager } from "../integrations/RetroAchievementsManager";
+import { SteamApiManager } from "../integrations/SteamApiManager";
 import { Scheduler } from "./Scheduler";
 import { ExpressionManager } from "./ExpressionManager";
 import { EmoteManager } from "./EmoteManager";
@@ -35,6 +36,7 @@ export class ExtendedClient extends Client {
     private slashCommands: ApplicationCommandDataResolvable[] = [];
 
     public ra: RetroAchievementsManager;
+    public steam: SteamApiManager;
 
     constructor(shouldRegisterCommands: boolean = false) {
         super({
@@ -57,6 +59,7 @@ export class ExtendedClient extends Client {
         this.shouldRegisterCommands = shouldRegisterCommands;
         this.start();
         this.ra = new RetroAchievementsManager(this);
+        this.steam = new SteamApiManager(this);
         this.scheduler = new Scheduler(this);
         this.messageHandler = new MessageHandler(this);
         this.settings = new GuildSettingsManager(this);

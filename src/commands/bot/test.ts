@@ -1,6 +1,5 @@
-import { PermissionFlagsBits } from "discord.js";
+import { Channel, PermissionFlagsBits, TextChannel } from "discord.js";
 import { Command } from "../../core/Command";
-import { Birthdays } from "../../core/Birthdays";
 
 export default new Command({
     name: "test",
@@ -12,7 +11,12 @@ export default new Command({
             await args.interaction.reply({ content: "Test began" });
             // ======================================================================
 
-            Birthdays.check(args.client);
+            const recent = await args.client.steam.getUserRecentGames("76561197984509155");
+
+            const channelID: string = args.interaction.channel?.id as string;
+            const channel: Channel = args.client.channels.cache.get(channelID) as TextChannel;
+            await channel.send(JSON.stringify(recent, null, 2));
+            
 
             // ======================================================================
             await args.interaction.editReply({ content: "Test concluded successfully" });
