@@ -17,8 +17,6 @@ A Discord chatbot written in TypeScript for Node.js using the discord.js library
 
 [discord.js](https://discord.js.org/)
 
-[AT Protocol API](https://github.com/bluesky-social/atproto)
-
 [openweathermap-ts](https://github.com/Endunry/openweathermap-ts)
 
 [RetroAchievements api-js](https://github.com/RetroAchievements/api-js)
@@ -26,8 +24,6 @@ A Discord chatbot written in TypeScript for Node.js using the discord.js library
 [puppeteer](https://github.com/puppeteer/puppeteer)
 
 [Luxon](https://github.com/moment/luxon)
-
-[@breejs/later](https://github.com/breejs/later)
 
 [zod](https://github.com/colinhacks/zod)
 
