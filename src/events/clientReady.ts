@@ -23,7 +23,7 @@ export default new Event(
         client.logger.bot(`${readyStr}`);
 
         client.scheduler.initialize();
-
-        await client.setMilkStatus();
+        await client.setStatus(" ");
+        //await client.setMilkStatus();
     }
 );

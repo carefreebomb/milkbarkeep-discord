@@ -16,7 +16,6 @@ import { Logger } from "./Logger";
 import { MessageHandler } from "./MessageHandler";
 import { RetroAchievementsManager } from "../integrations/RetroAchievementsManager";
 import { Scheduler } from "./Scheduler";
-import { BlueskyManager } from "../integrations/BlueskyManager";
 import { ExpressionManager } from "./ExpressionManager";
 import { EmoteManager } from "./EmoteManager";
 import { StickerManager } from "./StickerManager";
@@ -36,7 +35,6 @@ export class ExtendedClient extends Client {
     private slashCommands: ApplicationCommandDataResolvable[] = [];
 
     public ra: RetroAchievementsManager;
-    public bsky: BlueskyManager;
 
     constructor(shouldRegisterCommands: boolean = false) {
         super({
@@ -63,7 +61,6 @@ export class ExtendedClient extends Client {
         this.messageHandler = new MessageHandler(this);
         this.settings = new GuildSettingsManager(this);
         this.expressions = new ExpressionManager(this);
-        this.bsky = new BlueskyManager(this);
     }
 
     start(): void {

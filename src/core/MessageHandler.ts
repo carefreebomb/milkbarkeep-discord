@@ -18,7 +18,8 @@ export class MessageHandler{
         if (consoleOutput.enabled === true && consoleOutput.channelId === message.channelId) return;
 
         // Replace these with trigger map
-        this.milkCheck(message);
+        //this.milkCheck(message);
+        this.cartonCheck(message);
         this.tipCheck(message);
 
         this.triggers.check(message);
@@ -99,5 +100,49 @@ export class MessageHandler{
         if (regex.test(message.content)) {
             await message.reply(response);
         }
+    }
+
+    private async cartonCheck(message: Message): Promise<void> {
+        const regex = /^!milk(?:\s+(?:<@!?(\d+)>|@?([\w.-]+)))?$/;
+        let response: string = `\`\`\`
+ ___________________
+< Milk me, username >
+ -------------------
+ \\     ____________
+  \\    |__________|
+      /           /\\
+     /           /  \\
+    /___________/___/|
+    |          |     |
+    |  ==\\ /== |     |
+    |   O   O  | \\ \\ |
+    |     <    |  \\ \\|
+   /|          |   \\ \\
+  / |  \\_____/ |   / /
+ / /|          |  / /|
+/||\\|          | /||\\/
+    -------------|
+        | |    | |
+       <__/    \\__>\n\`\`\``;
+
+        const match: RegExpMatchArray | null = message.content.match(regex);
+        if (!match) { return; }
+
+        const userId: string = match[1]; // from <@ID>
+        const inputName: string = match[2]; // from plain text
+        let nameToUse: string = message.author.displayName;
+
+        if (userId) {
+            try {
+                const user: User = await this.clientRef.users.fetch(userId);
+                nameToUse = user.displayName;
+            } catch {
+                nameToUse = `<@${userId}>`;
+            }
+        } else if (inputName) {
+            nameToUse = inputName;
+        }
+        
+        await message.reply(response.replace("username", nameToUse));
     }
 }
