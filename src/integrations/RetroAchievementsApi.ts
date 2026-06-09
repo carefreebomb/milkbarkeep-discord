@@ -14,7 +14,7 @@ import {
 } from "@retroachievements/api";
 import { Util } from "../util/Util";
 
-import type { achievementData, userPoints } from "../types/RATypes";
+import type { retroAchievementData, userPoints } from "../types/RATypes";
 
 export class RetroAchievementsApi {
 
@@ -136,9 +136,9 @@ export class RetroAchievementsApi {
      * 
      * Repo: https://github.com/RetroAchievements/api-js/blob/main/src/user/getUserRecentAchievements.ts
      */
-    public static async getRecentList(auth: AuthObject, users: Array<string>, minutesToLookBack: number = 60): Promise<Array<achievementData>> {
+    public static async getRecentList(auth: AuthObject, users: Array<string>, minutesToLookBack: number = 60): Promise<Array<retroAchievementData>> {
         // Request normally defaults to 60
-        const recentList: achievementData[] = [];
+        const recentList: retroAchievementData[] = [];
         try {
             for (const user of users) {
                 const userEarnedRecent: UserRecentAchievement[] = await getUserRecentAchievements(auth, {
@@ -151,7 +151,7 @@ export class RetroAchievementsApi {
                 // recent.push(...userEarnedRecent);
                 await Util.sleep(this.callDelayInMS);
             }
-            recentList.sort((a: achievementData, b: achievementData) => {
+            recentList.sort((a: retroAchievementData, b: retroAchievementData) => {
                 if (a.date > b.date) {
                     return -1;
                 } else if (b.date < a.date) {

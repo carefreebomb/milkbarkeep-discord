@@ -35,6 +35,10 @@
             "enabled": false,
             "channelId": ""
         },
+        "steamFeed": {
+            "enabled": false,
+            "channelId": ""
+        },
         "welcome": {
             "enabled": false,
             "channelId": "",

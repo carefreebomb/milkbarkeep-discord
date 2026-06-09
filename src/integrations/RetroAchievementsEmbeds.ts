@@ -1,7 +1,7 @@
 import { ColorResolvable, EmbedBuilder } from "discord.js";
 import { DateTime } from "luxon";
 import { Timestamps } from "../core/Timestamps";
-import type { achievementData, RARankingType, userPoints } from "../types/RATypes";
+import type { retroAchievementData, RARankingType, userPoints } from "../types/RATypes";
 import { AchievementUnlocksMetadata, GameExtended } from "@retroachievements/api";
 
 export class RetroAchievementsEmbeds {
@@ -47,7 +47,7 @@ export class RetroAchievementsEmbeds {
         }
     }
 
-    public static async createFeedAchievementEmbed(data: achievementData): Promise<EmbedBuilder> {
+    public static async createFeedAchievementEmbed(data: retroAchievementData): Promise<EmbedBuilder> {
         // DATA STRING FORMATTING
         const baseURL: string = "https://www.retroachievements.org/";
         const avatarURL: string = "https://media.retroachievements.org/UserPic/" +

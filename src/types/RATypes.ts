@@ -12,7 +12,7 @@ export type userPoints = {
     points: number
 }
 
-export interface achievementData extends UserRecentAchievement {
+export interface retroAchievementData extends UserRecentAchievement {
     username: string,
 }
 

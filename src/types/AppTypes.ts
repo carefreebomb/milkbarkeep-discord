@@ -26,6 +26,7 @@ export const GuildSettingsSchema = z.object({
         oddball: FeatureSchema,
         raFeed: FeatureSchema,
         raWeekly: FeatureSchema,
+        steamFeed: FeatureSchema,
         welcome: FeatureSchema,
     }),
     channelsNotToLog: z.array(z.string()),
@@ -52,6 +53,7 @@ export type FeatureName =
     "oddball" |
     "raFeed" |
     "raWeekly" |
+    "steamFeed" |
     "welcome";
 
 export type EmoteOperation = {

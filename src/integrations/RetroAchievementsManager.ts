@@ -5,7 +5,7 @@ import { ExtendedClient } from "../core/ExtendedClient";
 import { retroAchievements as api } from "../../data/apiKeys.json";
 import { RetroAchievementsApi } from "./RetroAchievementsApi";
 import { RetroAchievementsEmbeds } from "./RetroAchievementsEmbeds";
-import { achievementData, RARankingType, RASettingsJson, RASettingsSchema, userPoints } from "../types/RATypes";
+import { retroAchievementData, RARankingType, RASettingsJson, RASettingsSchema, userPoints } from "../types/RATypes";
 import { EmbedBuilder, Guild, TextChannel } from "discord.js";
 import { Util } from "../util/Util";
 import type { ExtendedInteraction } from "../types/CommandTypes";
@@ -58,8 +58,8 @@ export class RetroAchievementsManager {
 
     // #region Achievement Feeds
 
-    private async getRecentList(userList: Array<string>, minutesToLookBack: number = this.defaultMinToLookBack): Promise<Array<achievementData>> {
-        let recentList: Array<achievementData> = new Array<achievementData>;
+    private async getRecentList(userList: Array<string>, minutesToLookBack: number = this.defaultMinToLookBack): Promise<Array<retroAchievementData>> {
+        let recentList: Array<retroAchievementData> = new Array<retroAchievementData>;
         try {
             recentList = await RetroAchievementsApi.getRecentList(this.auth, userList, minutesToLookBack);
         } catch (error: unknown) {
@@ -68,7 +68,7 @@ export class RetroAchievementsManager {
         return recentList;
     }
 
-    private async chunkEmbeds(recent: achievementData[]): Promise<Array<EmbedBuilder[]>> {
+    private async chunkEmbeds(recent: retroAchievementData[]): Promise<Array<EmbedBuilder[]>> {
         // For each result, create a new embed
         const embeds: EmbedBuilder[] = [];
         for (const row of recent) {
@@ -89,7 +89,7 @@ export class RetroAchievementsManager {
         const logStr: string = `${guildName} ~ ${channelName} - `;
 
         // Get array of recent achievements
-        let recent: achievementData[];
+        let recent: retroAchievementData[];
         try {
             recent = await this.getRecentList(userList, minutesToLookBack);
             if (recent.length === 0) {

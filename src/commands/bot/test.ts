@@ -15,7 +15,9 @@ export default new Command({
 
             const channelID: string = args.interaction.channel?.id as string;
             const channel: Channel = args.client.channels.cache.get(channelID) as TextChannel;
-            await channel.send(JSON.stringify(recent, null, 2));
+            console.log(recent[0].lastPlayedAt);
+            console.log(recent[0].lastPlayedTimestamp);
+            //await channel.send(JSON.stringify(recent, null, 2));
             
 
             // ======================================================================
