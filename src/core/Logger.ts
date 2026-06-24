@@ -46,12 +46,11 @@ export class Logger {
         this.logStream = this.createStream();
     }
     
-    public ai(str: string): void { this.log(`[GAI] ${str}`, { color: "brightCyan" }); }
     public bot(str: string): void { this.log(`[BOT] ${str}`, { color: "red" }); }
     public dev(str: string): void { this.log(`[DEV] ${str}`, { color: "default" }); }
     public err(str: string): void { this.log(`[ERR] ${str}`, { color: "default" }); }
     public ra(str: string): void { this.log(`[RAC] ${str}`, { color: "yellow" }); }
-    public sky(str: string): void { this.log(`[SKY] ${str}`, { color: "brightBlue" }); }
+    public stm(str: string): void { this.log(`[STM] ${str}`, { color: "blue" }); }
     public vc(str: string): void { this.log(`[VOC] ${str}`, { color: "brightMagenta" }); }
     
     public deb(label: string, value: any): void {

@@ -1,5 +1,6 @@
 import { Channel, PermissionFlagsBits, TextChannel } from "discord.js";
 import { Command } from "../../core/Command";
+import { SteamAchievementCombinedData } from "../../types/SteamTypes";
 
 export default new Command({
     name: "test",
@@ -10,14 +11,31 @@ export default new Command({
             args.client.logger.dev("Test began");
             await args.interaction.reply({ content: "Test began" });
             // ======================================================================
-
-            const recent = await args.client.steam.getUserRecentGames("76561197984509155");
-
+            const guildId: string = args.interaction.guild?.id as string;
             const channelID: string = args.interaction.channel?.id as string;
             const channel: Channel = args.client.channels.cache.get(channelID) as TextChannel;
-            console.log(recent[0].lastPlayedAt);
-            console.log(recent[0].lastPlayedTimestamp);
-            //await channel.send(JSON.stringify(recent, null, 2));
+
+            //const test = await args.client.steam.getGameAchievements(1245620);
+
+            //const test = await args.client.steam.getUserRecentAchievements("");
+
+            /*
+            const userList: Array<string> = await args.client.steam.getGuildSteamUsers(guildId);
+            const test: SteamAchievementCombinedData[] = await args.client.steam.getAllUsersRecentList(userList);
+            console.log(JSON.stringify(test, null, 2));
+            */
+           //const test = await args.client.steam.getUserRecentGames("");
+           //console.log(JSON.stringify(test, null, 2));
+
+            /*
+            const recent = await args.client.steam.getUserRecentAchievements("") as SteamAchievementCombinedData[];
+            const achievement = recent[0];
+            const embed = await args.client.steam.createFeedAchievementEmbed(recent[0]);
+            await channel.send({
+                embeds: [embed]
+            })
+            */
+            
             
 
             // ======================================================================

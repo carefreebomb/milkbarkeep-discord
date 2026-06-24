@@ -110,6 +110,7 @@ export class RetroAchievementsManager {
             return;
         }
         
+        // Create and send embeds
         try {
             const channel: TextChannel = this.clientRef.channels.cache.get(channelId) as TextChannel;
             if (this.sendEmbedsInChunks === false) {
