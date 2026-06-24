@@ -120,50 +120,62 @@ export class SteamApiManager {
     // #region LOGIC
 
     public async getUserRecentAchievements(userId: string, minutesToLookBack: number = this.defaultMinToLookBack): Promise<Array<SteamAchievementCombinedData> | null> {
-        // Get user summary
-        const userSummary: UserSummary = await this.steam.getUserSummary(userId);
+        console.log(`Checking userId: ${userId}`);
+        const gamesToCheck: Map<number, { id: number, name: string, data: Array<SteamAchievementData> }> = 
+            new Map<number, { id: number, name: string , data: Array<SteamAchievementData> }>();
 
-        // Get user's recently played games
+        // Get user summary, currently playing, and recently played games
+        const userSummary: UserSummary = await this.steam.getUserSummary(userId);
+        const userCurrentGameId: number | undefined = userSummary.gameID;
+        const userCurrentGameName: string | undefined = userSummary.gameName;
         const userRecentGames: UserPlaytime<GameInfoBasic>[] | null = await this.getUserRecentGames(userId);
 
-        // If user not currently playing or hasn't recently played, return
-        if (!userRecentGames && !userSummary.gameID) return null;
-
-        const multiGameAchievementData: Array<SteamAchievementData[]> = [];
-        const filteredGames: UserPlaytime<GameInfoBasic>[] = [];
-
+        // If user not currently playing or hasn't recently played, no recent achievements, so return
+        if (!userRecentGames && !userCurrentGameId) return null;
+        
         // If any currently playing game, get achievement data
-        if (userSummary.gameID) {
-            const gameAchievementData: SteamAchievementData[] | null = await this.getGameAchievements(userSummary.gameID);
-            if (gameAchievementData) multiGameAchievementData.push(gameAchievementData);
+        if (userCurrentGameId !== undefined) {
+            console.log(`Checking currently playing gameId: ${userCurrentGameId}`);
+            const gameAchievementData: SteamAchievementData[] | null = await this.getGameAchievements(userCurrentGameId);
+            if (gameAchievementData) {
+                gamesToCheck.set(userCurrentGameId, { id: userCurrentGameId, name: userCurrentGameName ?? " ", data: gameAchievementData});
+            }
         }
+
+        console.log(`Map after adding currently playing game: ${[...gamesToCheck.keys()]}`);
 
         // If any recently played games, get achievement data, filter out setless games
         if (userRecentGames) {
             for (const recent of userRecentGames) {
+                console.log(
+                    "Checking ",
+                    recent.game.id,
+                    "\nMap already has: ",
+                    gamesToCheck.has(recent.game.id),
+                    "Map keys: ",
+                    [...gamesToCheck.keys()]
+                );
                 // If there was a currently playing game, don't add it twice if it was also already in the recently played list
-                if (userSummary.gameID && (userSummary.gameID === recent.game.id)) { continue; }
+                if (gamesToCheck.has(recent.game.id)) { continue; }
+                console.log(`Made it past map check for ${recent.game.id}`);
+                
                 const gameAchievementData: SteamAchievementData[] | null = await this.getGameAchievements(recent.game.id);
                 if (gameAchievementData && gameAchievementData.length > 0) {
-                    filteredGames.push(recent);
-                    multiGameAchievementData.push(gameAchievementData);
+                    gamesToCheck.set(recent.game.id, { id: recent.game.id, name: recent.game.name, data: gameAchievementData });
                 }
             }
         }
 
         // Get user's unlock data for each remaining game
-        let userRecentAchievements: SteamAchievementCombinedData[] = [];
+        const userRecentAchievements: SteamAchievementCombinedData[] = [];
         try {
-            for (let i = 0; i < filteredGames.length; i++) {
-                const currentGame: UserPlaytime<GameInfoBasic> = filteredGames[i];
-                const currentGameAchievementData: SteamAchievementData[] = multiGameAchievementData[i];
-
-                const userGameResults: UserAchievements | null = await this.getUserAchievements(userId, currentGame.game.id);
+            for (const currentGame of gamesToCheck.values()) {
+                const userGameResults: UserAchievements | null = await this.getUserAchievements(userId, currentGame.id);
 
                 // If there is achievement data, merge everything as one formatted object
                 if (userGameResults) {
                     for (const userAchievement of userGameResults.achievements) {
-                        const dataAchievement = currentGameAchievementData?.find(
+                        const dataAchievement = currentGame.data?.find(
                             a => a.internal_name === userAchievement.name
                         );
 
@@ -180,12 +192,12 @@ export class SteamApiManager {
                                 displayName: dataAchievement?.localized_name ?? " ",
                                 description: dataAchievement?.localized_desc ?? " ",
                                 hidden: Boolean(dataAchievement?.hidden) ?? false,
-                                icon: `https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/${currentGame.game.id}/${dataAchievement?.icon}`,
+                                icon: `https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/${currentGame.id}/${dataAchievement?.icon}`,
                                 playerPercent: dataAchievement?.player_percent_unlocked ?? " ",
                             },
                             app: {
-                                id: currentGame.game.id,
-                                name: currentGame.game.name,
+                                id: currentGame.id,
+                                name: currentGame.name,
                             }
                         };
                         userRecentAchievements.push(data);
@@ -201,7 +213,7 @@ export class SteamApiManager {
     }
 
     public async getAllUsersRecentList(userList: Array<string>, minutesToLookBack: number = this.defaultMinToLookBack): Promise<Array<SteamAchievementCombinedData>> {
-        let recentList: Array<SteamAchievementCombinedData> = [];
+        const recentList: Array<SteamAchievementCombinedData> = [];
         try {
             for (const user of userList) {
                 const userRecentAchievements: SteamAchievementCombinedData[] | null = await this.getUserRecentAchievements(user, minutesToLookBack);
@@ -210,6 +222,7 @@ export class SteamApiManager {
         } catch (error: unknown) {
             throw error;
         }
+        recentList.sort((a, b) => a.achievement.timestamp - b.achievement.timestamp);
         return recentList;
     }
 
