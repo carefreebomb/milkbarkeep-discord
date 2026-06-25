@@ -120,7 +120,6 @@ export class SteamApiManager {
     // #region LOGIC
 
     public async getUserRecentAchievements(userId: string, minutesToLookBack: number = this.defaultMinToLookBack): Promise<Array<SteamAchievementCombinedData> | null> {
-        console.log(`Checking userId: ${userId}`);
         const gamesToCheck: Map<number, { id: number, name: string, data: Array<SteamAchievementData> }> = 
             new Map<number, { id: number, name: string , data: Array<SteamAchievementData> }>();
 
@@ -135,29 +134,20 @@ export class SteamApiManager {
         
         // If any currently playing game, get achievement data
         if (userCurrentGameId !== undefined) {
-            console.log(`Checking currently playing gameId: ${userCurrentGameId}`);
             const gameAchievementData: SteamAchievementData[] | null = await this.getGameAchievements(userCurrentGameId);
             if (gameAchievementData) {
-                gamesToCheck.set(userCurrentGameId, { id: userCurrentGameId, name: userCurrentGameName ?? " ", data: gameAchievementData});
+                // Explicitly casting since for whatever reason, the summary endpoint returns a string that gets by here,
+                // despite the library collection class using a number type, and my map key set as a number type, and the
+                // recently played endpoint using numbers for id. Just javascript things I guess, idk I'm tired
+                gamesToCheck.set(Number(userCurrentGameId), { id: userCurrentGameId, name: userCurrentGameName ?? " ", data: gameAchievementData});
             }
         }
-
-        console.log(`Map after adding currently playing game: ${[...gamesToCheck.keys()]}`);
 
         // If any recently played games, get achievement data, filter out setless games
         if (userRecentGames) {
             for (const recent of userRecentGames) {
-                console.log(
-                    "Checking ",
-                    recent.game.id,
-                    "\nMap already has: ",
-                    gamesToCheck.has(recent.game.id),
-                    "Map keys: ",
-                    [...gamesToCheck.keys()]
-                );
                 // If there was a currently playing game, don't add it twice if it was also already in the recently played list
                 if (gamesToCheck.has(recent.game.id)) { continue; }
-                console.log(`Made it past map check for ${recent.game.id}`);
                 
                 const gameAchievementData: SteamAchievementData[] | null = await this.getGameAchievements(recent.game.id);
                 if (gameAchievementData && gameAchievementData.length > 0) {
@@ -289,8 +279,6 @@ export class SteamApiManager {
         const description: string = (data.achievement.hidden) ? `||${data.achievement.description}||` : data.achievement.description;
         const storePageUrlString: string = `[${data.app.name}](https://store.steampowered.com/app/${data.app.id}/${this.steamTitleUrlSlug(data.app.name)}/)`;
         const discordTimestamp: string = Timestamps.default(data.achievement.timestamp);
-
-        console.log(data);
 
         const embed: EmbedBuilder = new EmbedBuilder()
             .setColor(color)
