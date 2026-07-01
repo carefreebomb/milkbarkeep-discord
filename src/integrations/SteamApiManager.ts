@@ -160,7 +160,7 @@ export class SteamApiManager {
         const userRecentAchievements: SteamAchievementCombinedData[] = [];
         try {
             for (const currentGame of gamesToCheck.values()) {
-                const userGameResults: UserAchievements | null = await this.getUserAchievements(userId, currentGame.id);
+                const userGameResults: UserAchievements | null = await this.getUserAchievements(userId, currentGame.id, minutesToLookBack);
 
                 // If there is achievement data, merge everything as one formatted object
                 if (userGameResults) {
