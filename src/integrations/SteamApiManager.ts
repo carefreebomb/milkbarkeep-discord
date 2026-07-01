@@ -182,7 +182,7 @@ export class SteamApiManager {
                                 displayName: dataAchievement?.localized_name ?? " ",
                                 description: dataAchievement?.localized_desc ?? " ",
                                 hidden: Boolean(dataAchievement?.hidden) ?? false,
-                                icon: `https://steamcdn-a.akamaihd.net/steamcommunity/public/images/apps/${currentGame.id}/${dataAchievement?.icon}`,
+                                icon: `https://shared.akamai.steamstatic.com/community_assets/images/apps/${currentGame.id}/${dataAchievement?.icon}`,
                                 playerPercent: dataAchievement?.player_percent_unlocked ?? " ",
                             },
                             app: {
