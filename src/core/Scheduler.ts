@@ -1,4 +1,3 @@
-import { AppletonCam } from "./AppletonCam";
 import { Birthdays } from "./Birthdays";
 import { ExtendedClient } from "./ExtendedClient";
 import { Cron } from "croner";

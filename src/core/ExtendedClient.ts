@@ -18,8 +18,6 @@ import { RetroAchievementsManager } from "../integrations/RetroAchievementsManag
 import { SteamApiManager } from "../integrations/SteamApiManager";
 import { Scheduler } from "./Scheduler";
 import { ExpressionManager } from "./ExpressionManager";
-import { EmoteManager } from "./EmoteManager";
-import { StickerManager } from "./StickerManager";
 import { discordAppToken } from "../../data/config.json";
 import type { CommandType } from "../types/CommandTypes";
 import type { GlobalVar } from "../types/AppTypes";

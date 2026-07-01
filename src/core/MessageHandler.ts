@@ -1,4 +1,4 @@
-import { Channel, Collection, Guild, Message, MessagePayload, MessageReplyOptions, MessageResolvable, TextChannel, User } from "discord.js";
+import { Channel, Collection, Guild, Message, TextChannel, User } from "discord.js";
 import { EmbedFixManager } from "./EmbedFixManager";
 import { ExtendedClient } from "./ExtendedClient";
 import { TriggerMap } from "./TriggerMap";
