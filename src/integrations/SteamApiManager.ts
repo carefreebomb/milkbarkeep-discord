@@ -275,7 +275,7 @@ export class SteamApiManager {
 
     public async createFeedAchievementEmbed(data: SteamAchievementCombinedData): Promise<EmbedBuilder> {
         const achievementPageUrl: string = `https://steamcommunity.com/stats/${data.app.id}/achievements`;
-        const color: ColorResolvable = "DarkNavy";
+        const color: ColorResolvable = "Navy";
         const description: string = (data.achievement.hidden) ? `||${data.achievement.description}||` : data.achievement.description;
         const storePageUrlString: string = `[${data.app.name}](https://store.steampowered.com/app/${data.app.id}/${this.steamTitleUrlSlug(data.app.name)}/)`;
         const discordTimestamp: string = Timestamps.default(data.achievement.timestamp);
