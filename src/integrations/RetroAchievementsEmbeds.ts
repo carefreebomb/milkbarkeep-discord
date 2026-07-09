@@ -48,7 +48,6 @@ export class RetroAchievementsEmbeds {
     }
 
     public static async createFeedAchievementEmbed(data: retroAchievementData): Promise<EmbedBuilder> {
-        // DATA STRING FORMATTING
         const baseURL: string = "https://www.retroachievements.org/";
         const avatarURL: string = "https://media.retroachievements.org/UserPic/" +
             data.username + ".png?cb=" + Date.now();
@@ -75,7 +74,7 @@ export class RetroAchievementsEmbeds {
             .setThumbnail(badgeURL)
             .addFields(
                 { name: "Game:", value: gameString, inline: false },
-                { name: "DateTime (GMT/RA):", value: data.date, inline: true },
+                { name: "Global Unlocks:", value: data.unlockPercent, inline: true },
                 { name: "DateTime (Yours):", value: discordTimestamp, inline: true },
             );
         return embed;

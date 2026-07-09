@@ -18,8 +18,6 @@ import type { retroAchievementData, userPoints } from "../types/RATypes";
 
 export class RetroAchievementsApi {
 
-    // #region Properties
-
     public static readonly callDelayInMS: number = 200; // 175
     private static readonly gmtOffsetInMS: number = 21600000;
 
@@ -145,11 +143,16 @@ export class RetroAchievementsApi {
                     username: user,
                     recentMinutes: minutesToLookBack,
                 });
-                for (const achievement of userEarnedRecent) {
-                    recentList.push({ ...achievement, username: user });
-                }
-                // recent.push(...userEarnedRecent);
                 await Util.sleep(this.callDelayInMS);
+                for (const achievement of userEarnedRecent) {
+                    const unlockData: AchievementUnlocksMetadata = await getAchievementUnlocks(auth, {
+                        achievementId: achievement.achievementId,
+                        count: 0,
+                    });
+                    const unlockPercent: string = `${((unlockData.unlocksCount / unlockData.totalPlayers) * 100).toFixed(2)}%`;
+                    await Util.sleep(this.callDelayInMS);
+                    recentList.push({ ...achievement, username: user, unlockPercent });
+                }
             }
             recentList.sort((a: retroAchievementData, b: retroAchievementData) => {
                 if (a.date > b.date) {
