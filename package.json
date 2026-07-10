@@ -12,13 +12,13 @@
     "devDependencies": {
         "@types/glob": "^8.1.0",
         "@types/luxon": "^3.4.2",
-        "@types/node": "^26.1.0",
-        "typescript": "^6.0.3"
+        "@types/node": "^26.1.1",
+        "typescript": "^7.0.2"
     },
     "dependencies": {
         "@retroachievements/api": "^2.1.0",
         "croner": "^10.0.1",
-        "discord.js": "^14.14.1",
+        "discord.js": "^14.26.5",
         "glob": "^13.0.0",
         "luxon": "^3.5.0",
         "openweathermap-ts": "^1.2.10",
