@@ -1,0 +1,9 @@
+These console icons were sourced from the RetroAchievements RAWeb repository:
+https://github.com/RetroAchievements/RAWeb/tree/master/public/assets/images/system
+
+Attribution for invidiual icons can be located on this RA maintained document:
+https://docs.google.com/spreadsheets/d/1PPQoBIOjyH-zK-96rQ-QSqsPLEdjdBMQS5E0QBHJU58/view?gid=0#gid=0
+
+Many icons originate from third-party sources, including:
+https://yspixel.jpn.org/qanda/help.htm
+https://github.com/Tatohead/Console-Iconset
