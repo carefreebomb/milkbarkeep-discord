@@ -14,7 +14,9 @@ export type userPoints = {
 
 export interface retroAchievementData extends UserRecentAchievement {
     username: string,
-    unlockPercent: string
+    unlockPercent: string,
+    systemId: number,
+    systemEmoji?: string
 }
 
 export type RARankingType = 

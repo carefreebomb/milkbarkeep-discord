@@ -150,8 +150,9 @@ export class RetroAchievementsApi {
                         count: 0,
                     });
                     const unlockPercent: string = `${((unlockData.unlocksCount / unlockData.totalPlayers) * 100).toFixed(2)}%`;
+                    const systemId: number = unlockData.console.id;
                     await Util.sleep(this.callDelayInMS);
-                    recentList.push({ ...achievement, username: user, unlockPercent });
+                    recentList.push({ ...achievement, username: user, unlockPercent, systemId });
                 }
             }
             recentList.sort((a: retroAchievementData, b: retroAchievementData) => {

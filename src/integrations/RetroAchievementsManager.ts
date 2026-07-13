@@ -6,7 +6,7 @@ import { retroAchievements as api } from "../../data/apiKeys.json";
 import { RetroAchievementsApi } from "./RetroAchievementsApi";
 import { RetroAchievementsEmbeds } from "./RetroAchievementsEmbeds";
 import { retroAchievementData, RARankingType, RASettingsJson, RASettingsSchema, userPoints } from "../types/RATypes";
-import { EmbedBuilder, Guild, TextChannel } from "discord.js";
+import { ApplicationEmoji, Collection, EmbedBuilder, Guild, TextChannel } from "discord.js";
 import { Util } from "../util/Util";
 import type { ExtendedInteraction } from "../types/CommandTypes";
 
@@ -72,11 +72,23 @@ export class RetroAchievementsManager {
         // For each result, create a new embed
         const embeds: EmbedBuilder[] = [];
         for (const row of recent) {
+            row.systemEmoji = await this.getSystemEmojiString(row.systemId);
             const embed: EmbedBuilder = await RetroAchievementsEmbeds.createFeedAchievementEmbed(row);
             embeds.push(embed);
         }
         const chunkedEmbeds: Array<EmbedBuilder[]> = Util.chunkArray(embeds, 10);
         return chunkedEmbeds;
+    }
+
+    public async getSystemEmojiString(systemId: number): Promise<string> {
+        const emojiName: string = `RA_${systemId}`;
+        let emoji: ApplicationEmoji | undefined = this.clientRef.application?.emojis.cache.find(e => e.name === emojiName);
+        if (!emoji) {
+            const emojis: Collection<string, ApplicationEmoji> | undefined = await this.clientRef.application?.emojis.fetch();
+            emoji = emojis?.find(e => e.name === emojiName);
+        }
+        const emojiString: string = emoji?.toString() ?? "<:RA_0:1526071257387503656>";
+        return emojiString;
     }
 
     public async updateFeed(guildId: string, minutesToLookBack: number = this.defaultMinToLookBack): Promise<void> {
@@ -116,6 +128,7 @@ export class RetroAchievementsManager {
             if (this.sendEmbedsInChunks === false) {
                 // Send messages with 1 embed each
                 for (const row of recent) {
+                    row.systemEmoji = await this.getSystemEmojiString(row.systemId);
                     const embed: EmbedBuilder = await RetroAchievementsEmbeds.createFeedAchievementEmbed(row);
                     await channel.send({
                         embeds: [ embed ],

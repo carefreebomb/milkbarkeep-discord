@@ -54,7 +54,7 @@ export class RetroAchievementsEmbeds {
         const profileURL: string = baseURL + "user/" + data.username;
         const badgeURL: string = baseURL + data.badgeUrl;
         const gameURL: string = baseURL + "game/" + data.gameId;
-        const gameString: string = `[${data.gameTitle}](${gameURL})\n${data.consoleName}`;
+        const gameString: string = `[${data.gameTitle}](${gameURL})\n${data.systemEmoji} ${data.consoleName}`;
         const achievementUrl: string = baseURL + "achievement/" + data.achievementId;
         const achievementString: string = `${data.title} (${data.points})`;
         const color: ColorResolvable = this.determinePointValueColor(data.points) as ColorResolvable;
@@ -105,5 +105,4 @@ export class RetroAchievementsEmbeds {
             );
         return embed;
     }
-    
 }
