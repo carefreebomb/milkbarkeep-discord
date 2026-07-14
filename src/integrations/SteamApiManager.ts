@@ -293,8 +293,8 @@ export class SteamApiManager {
             .setThumbnail(data.achievement.icon)
             .addFields(
                 { name: "Game:", value: storePageUrlString, inline: false },
-                { name: "Global Unlocks:", value: `${data.achievement.playerPercent}%`, inline: true },
                 { name: "DateTime (Yours):", value: discordTimestamp, inline: true },
+                { name: "Global Unlocks:", value: `${data.achievement.playerPercent}%`, inline: true },
             );
         return embed;
     }

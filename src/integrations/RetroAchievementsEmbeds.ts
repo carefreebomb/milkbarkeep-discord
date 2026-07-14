@@ -74,8 +74,8 @@ export class RetroAchievementsEmbeds {
             .setThumbnail(badgeURL)
             .addFields(
                 { name: "Game:", value: gameString, inline: false },
-                { name: "Global Unlocks:", value: data.unlockPercent, inline: true },
                 { name: "DateTime (Yours):", value: discordTimestamp, inline: true },
+                { name: "Global Unlocks:", value: data.unlockPercent, inline: true },
             );
         return embed;
     }
