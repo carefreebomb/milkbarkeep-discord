@@ -94,7 +94,9 @@ export class Birthdays {
             // Then post birthday message to channel
             if (resultIDs.length > 0) {
                 const lf: Intl.ListFormat = new Intl.ListFormat("en");
-                const botStr: string = "Today it's " + lf.format(resultTags) + "'s birthday! POGGGG";
+                let botStr: string = "Today it's " + lf.format(resultTags) + "'s birthday! POGGGG 🥛🎂🖤";
+                const botId: string = clientRef?.application?.bot?.id ?? "";
+                if (resultIDs.includes(botId)) { botStr += "\nHey, that's me! 🤖"; }
                 clientRef.logger.bot(`${guild.name} - ${botStr}`);
                 const channel: Channel = clientRef.channels.cache.get(channelId) as TextChannel;
                 await channel.send({
