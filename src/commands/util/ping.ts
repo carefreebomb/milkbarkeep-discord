@@ -1,4 +1,4 @@
-import { InteractionCallbackResponse } from "discord.js";
+import { EmbedBuilder, InteractionCallbackResponse } from "discord.js";
 import { Command } from "../../core/Command";
 
 export default new Command({
@@ -14,12 +14,17 @@ export default new Command({
             const latency: number = reply.resource?.message
                 ? reply.resource.message.createdTimestamp - args.interaction.createdTimestamp
                 : 0;
-            const socketPing: number = args.interaction.client.ws.ping;
-            await args.interaction.editReply(
-                `🏓 Pong!\n` +
-                `**Latency:** ${latency} ms\n` +
-                `**WebSocket:** ${socketPing} ms`
-            );
+            const websocket: string = args.interaction.client.ws.ping >= 0 ? `${args.interaction.client.ws.ping} ms` : "N/A";
+            const embed = new EmbedBuilder()
+                .setTitle("🏓 Pong!")
+                .setDescription(`
+                    **Latency:** ${latency} ms
+                    **Websocket:** ${websocket}    
+                `);
+            await args.interaction.editReply({
+                content: " ",
+                embeds: [ embed ]
+            });
         } catch (error: unknown) {
             args.client.logger.err(error as string);
             await args.interaction.editReply({ content: "Something went wrong with sending the message." });
