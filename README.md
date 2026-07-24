@@ -6,10 +6,9 @@ A Discord chatbot written in TypeScript for Node.js using the discord.js library
 
 ## Features
 - Scheduler with birthday reminders
-- Hourly Appleton Cam feed screencap
 - Sound effect embeds playable in mobile + desktop
 - Social media link embed fixes
-- Retro Achievements live earned feed
+- Steam and RetroAchievements live unlock feeds
 - Automatic emote reaction to given triggers
 - Misc slash commands (unit conversion, stats, user avatars, update status)
 
@@ -17,9 +16,9 @@ A Discord chatbot written in TypeScript for Node.js using the discord.js library
 
 [discord.js](https://discord.js.org/)
 
-[openweathermap-ts](https://github.com/Endunry/openweathermap-ts)
+[RetroAchievements/api-js](https://github.com/RetroAchievements/api-js)
 
-[RetroAchievements api-js](https://github.com/RetroAchievements/api-js)
+[xDimGG/steamapi](https://github.com/xDimGG/node-steamapi)
 
 [puppeteer](https://github.com/puppeteer/puppeteer)
 
