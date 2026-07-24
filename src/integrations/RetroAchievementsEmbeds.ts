@@ -60,6 +60,7 @@ export class RetroAchievementsEmbeds {
         const color: ColorResolvable = this.determinePointValueColor(data.points) as ColorResolvable;
         const unixTimestamp: number = DateTime.fromFormat(data.date, "yyyy-MM-dd HH:mm:ss", { zone: "utc" }).toSeconds();
         const discordTimestamp: string = Timestamps.default(unixTimestamp);
+        const description: string = `${data.description}\n\n${gameString}\n🔓 ${data.unlockPercent}\n🕰️ ${discordTimestamp}`;
 
         const embed: EmbedBuilder = new EmbedBuilder()
             .setColor(color)
@@ -70,13 +71,8 @@ export class RetroAchievementsEmbeds {
                 iconURL: avatarURL,
                 url: profileURL,
             })
-            .setDescription(data.description)
-            .setThumbnail(badgeURL)
-            .addFields(
-                { name: "Game:", value: gameString, inline: false },
-                { name: "DateTime (Yours):", value: discordTimestamp, inline: true },
-                { name: "Global Unlocks:", value: data.unlockPercent, inline: true },
-            );
+            .setDescription(description)
+            .setThumbnail(badgeURL);
         return embed;
     }
 

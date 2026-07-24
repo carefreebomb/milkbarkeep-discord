@@ -276,9 +276,11 @@ export class SteamApiManager {
     public async createFeedAchievementEmbed(data: SteamAchievementCombinedData): Promise<EmbedBuilder> {
         const achievementPageUrl: string = `https://steamcommunity.com/stats/${data.app.id}/achievements`;
         const color: ColorResolvable = "Navy";
-        const description: string = (data.achievement.hidden) ? `||${data.achievement.description}||` : data.achievement.description;
+        const achievementString: string = (data.achievement.hidden) ? `||${data.achievement.description}||` : data.achievement.description;
         const storePageUrlString: string = `[${data.app.name}](https://store.steampowered.com/app/${data.app.id}/${this.steamTitleUrlSlug(data.app.name)}/)`;
+        const gameString: string = `${storePageUrlString}\n<:Steam:1529739831478059090> Steam`;
         const discordTimestamp: string = Timestamps.default(data.achievement.timestamp);
+        const description: string = `${achievementString}\n\n${gameString}\n🔓 ${data.achievement.playerPercent}%\n🕰️ ${discordTimestamp}`;
 
         const embed: EmbedBuilder = new EmbedBuilder()
             .setColor(color)
@@ -290,12 +292,7 @@ export class SteamApiManager {
                 url: data.user.url,
             })
             .setDescription(description)
-            .setThumbnail(data.achievement.icon)
-            .addFields(
-                { name: "Game:", value: storePageUrlString, inline: false },
-                { name: "DateTime (Yours):", value: discordTimestamp, inline: true },
-                { name: "Global Unlocks:", value: `${data.achievement.playerPercent}%`, inline: true },
-            );
+            .setThumbnail(data.achievement.icon);
         return embed;
     }
 
