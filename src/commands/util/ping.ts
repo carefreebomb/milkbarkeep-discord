@@ -17,10 +17,10 @@ export default new Command({
             const websocket: string = args.interaction.client.ws.ping >= 0 ? `${args.interaction.client.ws.ping} ms` : "N/A";
             const embed = new EmbedBuilder()
                 .setTitle("🏓 Pong!")
-                .setDescription(`
-                    **Latency:** ${latency} ms
-                    **Websocket:** ${websocket}    
-                `);
+                .setDescription(
+                    `**Latency:** ${latency} ms\n` +
+                    `**Websocket:** ${websocket}`
+                );
             await args.interaction.editReply({
                 content: " ",
                 embeds: [ embed ]

@@ -26,7 +26,7 @@ export default new Command({
         const lastStart: number = Math.floor((Date.now() - process.uptime() * 1000) / 1000);
         const lastStartFull: string = Timestamps.longDateTime(lastStart);
         const lastStartRelative: string = Timestamps.relative(lastStart);
-        const lastStartStr: string = `${lastStartFull} (${lastStartRelative})`;
+        const lastStartStr: string = `${lastStartFull}\n(${lastStartRelative})`;
 
         const memory: NodeJS.MemoryUsage = process.memoryUsage();
         const memoryMB: string = `${(memory.rss / 1024 / 1024).toFixed(1)} MB`;
@@ -53,22 +53,23 @@ export default new Command({
 
         const embed = new EmbedBuilder()
             .setTitle("MilkBarkeep Statistics")
-            .setDescription(`
-                **GitHub:** [carefreebomb/milkbarkeep-discord](<https://github.com/carefreebomb/milkbarkeep-discord>)
-                **Last Commit:** ${commitStr}
+            .setDescription(
+                `**GitHub:** [carefreebomb/milkbarkeep-discord](<https://github.com/carefreebomb/milkbarkeep-discord>)\n` +
+                `**Last Commit:** ${commitStr}\n\n` +
 
-                **Last Start:** ${lastStartStr}
-                **Uptime:** ${uptime}
+                `**Uptime:** ${uptime}\n` +
+                `**Last Start:** ${lastStartStr}\n\n` +
+                
 
-                **Node.js:** ${nodeVersion}
-                **discord.js:** ${djsVersion}
+                `**Node.js:** ${nodeVersion}\n` +
+                `**discord.js:** ${djsVersion}\n\n` +
 
-                **WebSocket:** ${websocket}
-                **Memory:** ${memoryMB}
+                `**WebSocket:** ${websocket}\n` +
+                `**Memory:** ${memoryMB}\n\n` +
 
-                **Servers:** ${servers}
-                **Users:** ${users}
-            `);
+                `**Servers:** ${servers}\n` +
+                `**Users:** ${users}`
+            );
 
         try {
             const reply: InteractionResponse<boolean> = await args.interaction.reply({
