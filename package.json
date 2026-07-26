@@ -17,6 +17,7 @@
     },
     "dependencies": {
         "@retroachievements/api": "^2.1.0",
+        "archipelago.js": "^2.1.0",
         "croner": "^10.0.1",
         "discord.js": "^14.26.5",
         "glob": "^13.0.0",
