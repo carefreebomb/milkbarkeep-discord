@@ -60,7 +60,9 @@ export class RetroAchievementsEmbeds {
         const color: ColorResolvable = this.determinePointValueColor(data.points) as ColorResolvable;
         const unixTimestamp: number = DateTime.fromFormat(data.date, "yyyy-MM-dd HH:mm:ss", { zone: "utc" }).toSeconds();
         const discordTimestamp: string = Timestamps.default(unixTimestamp);
-        const description: string = `${data.description}\n\n${gameString}\n🔓 ${data.unlockPercent}\n🕰️ ${discordTimestamp}`;
+        const unlockEmote: string = `<:unlocked:1533549541067067392>`;
+        const clockEmote: string = `<:clockface:1533549578261893150>`;
+        const description: string = `${data.description}\n\n${gameString}\n${unlockEmote} ${data.unlockPercent}\n${clockEmote} ${discordTimestamp}`;
 
         const embed: EmbedBuilder = new EmbedBuilder()
             .setColor(color)
