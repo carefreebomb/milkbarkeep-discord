@@ -1,6 +1,7 @@
 {
     "discordAppToken": "",
     "devTestChannelId": "",
+    "ytDlpPath": "C:\\Program Files\\yt-dlp\\yt-dlp.exe",
     "consoleOutput": {
         "enabled": false,
         "guildId": "987654321987654321",

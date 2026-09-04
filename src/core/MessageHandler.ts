@@ -8,10 +8,12 @@ import { consoleOutput } from "../../data/config.json";
 export class MessageHandler{
     private clientRef: ExtendedClient;
     private triggers: TriggerMap;
+    private embedFixer: EmbedFixManager;
 
     constructor(clientRef: ExtendedClient) {
         this.clientRef = clientRef;
         this.triggers = new TriggerMap(clientRef);
+        this.embedFixer = new EmbedFixManager(clientRef);
     }
 
     public async checkMessage(message: Message): Promise<void> {
@@ -25,7 +27,7 @@ export class MessageHandler{
         this.triggers.check(message);
         
         // MISC CHECKS
-        EmbedFixManager.check(message);
+        this.embedFixer.check(message);
     }
 
     public isPossibleMessageId(possibleId: string): boolean {
