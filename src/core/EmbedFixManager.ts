@@ -105,7 +105,7 @@ export class EmbedFixManager {
                             content: "Checking for reel...",
                             components: []
                         });
-                        this.clientRef.logger.bot(`${guildName} ~ #${channelName} - Saving Instagram reel: ${urls.oldUrl}`);
+                        this.clientRef.logger.bot(`${guildName} ~ #${channelName} - Checking for Instagram reel: ${urls.oldUrl}`);
                         const filePath: string | null = await this.downloadInstagramReel(urls.oldUrl);
                         if (filePath) {
                             await newInteraction.message.edit({
@@ -138,7 +138,7 @@ export class EmbedFixManager {
 
         try {
             const { stdout } = await execFileAsync(ytDlpPath, [
-                "--no-update",
+                "--update",
                 "--no-playlist",
                 "--dump-single-json",
                 url
@@ -153,7 +153,7 @@ export class EmbedFixManager {
 
             // Download if found
             await execFileAsync(ytDlpPath, [
-                "--no-update",
+                "--update",
                 "--no-playlist",
                 "-f", "best[ext=mp4]/best",
                 "-o", output,
