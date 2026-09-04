@@ -15,7 +15,6 @@ export class Scheduler {
         this.schedule("0 0 * * *", () => { this.midnightChecks(); });
         this.schedule("*/10 * * * *", () => { this.clientRef.ra.updateAllFeeds(10); });
         this.schedule("*/10 * * * *", () => { this.clientRef.steam.updateAllFeeds(10) });
-        this.schedule("58 17 * * 0", () => { this.clientRef.ra.weeklyReport(); });
     }
 
     private schedule(expression: string, callback: () => void): Cron<undefined> {
