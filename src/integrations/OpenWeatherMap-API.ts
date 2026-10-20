@@ -34,7 +34,7 @@ export class OpenWeatherMapApi extends OpenWeatherMap {
 
         // Time variables
         const now: Date = new Date();
-        const longDateTime: string = Timestamps.longDateTime(now);
+        const longDateTime: string = Timestamps.fullDateShortTime(now);
         const relativeTime: string = Timestamps.relative(now);
         const outputStr: string = `${longDateTime}\n(${relativeTime})`;
         const options: Intl.DateTimeFormatOptions = {

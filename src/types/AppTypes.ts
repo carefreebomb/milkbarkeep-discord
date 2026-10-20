@@ -72,13 +72,15 @@ export type EmoteInfo = {
 };
 
 export type TimestampFormats = {
-    default: string;
     shortTime: string;
-    longTime: string;
+    mediumTime: string;
     shortDate: string;
     longDate: string;
-    shortDateTime: string;
-    longDateTime: string;
+    default: string;
+    longDateShortTime: string;
+    fullDateShortTime: string;
+    shortDateShortTime: string;
+    shortDateMediumTime: string;
     relative: string;
 };
 

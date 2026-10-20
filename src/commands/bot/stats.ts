@@ -24,7 +24,7 @@ export default new Command({
         }
         const uptime: string = formatDuration(process.uptime());
         const lastStart: number = Math.floor((Date.now() - process.uptime() * 1000) / 1000);
-        const lastStartFull: string = Timestamps.longDateTime(lastStart);
+        const lastStartFull: string = Timestamps.fullDateShortTime(lastStart);
         const lastStartRelative: string = Timestamps.relative(lastStart);
         const lastStartStr: string = `${lastStartFull}\n(${lastStartRelative})`;
 

@@ -7,6 +7,7 @@ export class Timestamps {
      * Discord timestamps can be useful for specifying a date/time across multiple users time zones. 
      * They work with the Unix Timestamp format and can be posted by regular users as well as bots and applications.
      * https://gist.github.com/LeviSnoot/d9147767abeef2f770e9ddcd91eb85aa
+     * https://docs.discord.com/developers/reference#message-formatting-timestamp-styles
      * https://old.discordjs.dev/#/docs/discord.js/14.14.1/typedef/TimestampStylesString
      */
     private static format(timeIn: Date | number, styleString?: TimestampStylesString): string {
@@ -16,76 +17,104 @@ export class Timestamps {
 
     public static all(timestamp: Date | number): TimestampFormats {
         return {
-            default: Timestamps.default(timestamp),
             shortTime: Timestamps.shortTime(timestamp),
-            longTime: Timestamps.longTime(timestamp),
+            mediumTime: Timestamps.mediumTime(timestamp),
             shortDate: Timestamps.shortDate(timestamp),
             longDate: Timestamps.longDate(timestamp),
-            shortDateTime: Timestamps.shortDateTime(timestamp),
-            longDateTime: Timestamps.longDateTime(timestamp),
+            default: Timestamps.default(timestamp),
+            longDateShortTime: Timestamps.longDateShortTime(timestamp),
+            fullDateShortTime: Timestamps.fullDateShortTime(timestamp),
+            shortDateShortTime: Timestamps.shortDateShortTime(timestamp),
+            shortDateMediumTime: Timestamps.shortDateMediumTime(timestamp),
             relative: Timestamps.relative(timestamp)
         }
     }
 
     /**
-     * [ 20 April 2021 16:20 ]
-     * Default time format.
-     */
-    public static default(timestamp: Date | number): string {
-        return Timestamps.format(timestamp);
-    }
-
-    /**
-     * [ 16:20 ]
-     * Short time format, consisting of hours and minutes.
+     * t
+     * 16:20
+     * Short Time
      */
     public static shortTime(timestamp: Date | number): string {
         return Timestamps.format(timestamp, "t");
     }
 
     /**
-     * [ 16:20:30 ]
-     * Long time format, consisting of hours, minutes, and seconds.
+     * T
+     * 16:20:30
+     * Medium Time
      */
-    public static longTime(timestamp: Date | number): string {
+    public static mediumTime(timestamp: Date | number): string {
         return Timestamps.format(timestamp, "T");
     }
 
     /**
-     * [ 20/04/2021 ]
-     * Short date format, consisting of day, month, and year.
+     * d
+     * 20/04/2021
+     * Short Date
      */
     public static shortDate(timestamp: Date | number): string {
         return Timestamps.format(timestamp, "d");
     }
 
     /**
-     * [ 20 April 2021 ]
-     * Long date format, consisting of day, month, and year.
+     * D
+     * April 20, 2021
+     * Long Date
      */
     public static longDate(timestamp: Date | number): string {
         return Timestamps.format(timestamp, "D");
     }
 
     /**
-     * [ 20 April 2021 16:20 ]
-     * Short date-time format, consisting of short date and short time formats.Short date-time format, consisting of short date and short time formats.
+     * f*
+     * April 20, 2021 at 16:20
+     * Long Date, Short Time
      */
-    public static shortDateTime(timestamp: Date | number): string {
+    public static default(timestamp: Date | number): string {
+        return Timestamps.format(timestamp);
+    }
+
+    /**
+     * f*
+     * April 20, 2021 at 16:20
+     * Long Date, Short Time
+     */
+    public static longDateShortTime(timestamp: Date | number): string {
         return Timestamps.format(timestamp, "f");
     }
 
     /**
-     * [ Tuesday, 20 April 2021 16:20 ]
-     * Long date-time format, consisting of long date and short time formats.
+     * F
+     * Tuesday, 20 April 2021 16:20
+     * Full Date, Short Time
      */
-    public static longDateTime(timestamp: Date | number): string {
+    public static fullDateShortTime(timestamp: Date | number): string {
         return Timestamps.format(timestamp, "F");
     }
 
     /**
-     * [ 2 months ago ]
-     * Relative time format, consisting of a relative duration format.
+     * s
+     * 20/04/2021, 16:20
+     * Short Date, Short Time
+     */
+    public static shortDateShortTime(timestamp: Date | number): string {
+        return Timestamps.format(timestamp, "s");
+    }
+
+    /**
+     * S
+     * 20/04/2021, 16:20:30
+     * Short Date, Medium Time
+     */
+    public static shortDateMediumTime(timestamp: Date | number): string {
+        return Timestamps.format(timestamp, "S");
+    }
+
+    /**
+     * R
+     * 2 months ago
+     * Relative Time
      */
     public static relative(timestamp: Date | number): string {
         return Timestamps.format(timestamp, "R");

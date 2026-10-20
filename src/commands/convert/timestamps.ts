@@ -139,10 +139,10 @@ export default new Command({
             .addFields([
                 { name: "Input Date:", value: `\`${dateTime.toLocaleString(DateTime.DATETIME_FULL)}\``},
                 { name: "\u200B", value: "\u200B" },
-                { name: "Time:", value: `${formats.shortTime}\n\`${formats.shortTime}\`` },
+                { name: "Short Time:", value: `${formats.shortTime}\n\`${formats.shortTime}\`` },
                 { name: "Short Date:", value: `${formats.shortDate}\n\`${formats.shortDate}\`` },
                 { name: "Long Date:", value: `${formats.longDate}\n\`${formats.longDate}\`` },
-                { name: "Long Date and Time:", value: `${formats.longDateTime}\n\`${formats.longDateTime}\`` },
+                { name: "Full Date, Short Time:", value: `${formats.fullDateShortTime}\n\`${formats.fullDateShortTime}\`` },
                 { name: "Relative:", value: `${formats.relative}\n\`${formats.relative}\`` }
             ]);
 
