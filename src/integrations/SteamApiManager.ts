@@ -279,7 +279,7 @@ export class SteamApiManager {
         const achievementString: string = (data.achievement.hidden) ? `||${data.achievement.description}||` : data.achievement.description;
         const storePageUrlString: string = `[${data.app.name}](https://store.steampowered.com/app/${data.app.id}/${this.steamTitleUrlSlug(data.app.name)}/)`;
         const gameString: string = `${storePageUrlString}\n<:Steam:1529739831478059090> Steam`;
-        const discordTimestamp: string = Timestamps.default(data.achievement.timestamp);
+        const discordTimestamp: string = Timestamps.shortDateShortTime(data.achievement.timestamp);
         const unlockEmote: string = `<:unlocked:1533549541067067392>`;
         const clockEmote: string = `<:clockface:1533549578261893150>`;
         const description: string = `${achievementString}\n\n${gameString}\n${unlockEmote} ${data.achievement.playerPercent}%\n${clockEmote} ${discordTimestamp}`;
