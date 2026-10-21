@@ -11,7 +11,8 @@ export class Logger {
     private logDir: string;
     private currentDate: string;
 
-    private readonly barStr: string = "========================================================================";
+    private readonly barStrOld: string = "========================================================================";
+    private readonly barStr: string = "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━";
     private readonly DEBUG: boolean = true;
     private readonly colors: ANSIColorMap = {
         "default": [39, 49], 

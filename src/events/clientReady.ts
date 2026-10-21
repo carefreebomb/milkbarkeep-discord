@@ -12,7 +12,17 @@ export default new Event(
         "| |\\/| | | | | |    |    \\ | ___ \\  _  ||    /|    \\ |  __||  __||  __/ \n" +
         "| |  | |_| |_| |____| |\\  \\| |_/ / | | || |\\ \\| |\\  \\| |___| |___| | \n" +
         "\\_|  |_/\\___/\\_____/\\_| \\_/\\____/\\_| |_/\\_| \\_\\_| \\_/\\____/\\____/\\_|";
-        client.logger.logWithoutTime(asciiText);
+
+        const asciiText2 = "\n" +
+            "█▄ ▄█ ▀█▀ █    █ ▄▀ █▀▀▄ ▄▀▀▄ █▀▀▄ █ ▄▀ █▀▀▀ █▀▀▀ █▀▀▄ \n" +
+            "█ ▀ █  █  █    █▀▄  █▀▀▄ █▀▀█ █▀█  █▀▄  █▀▀  █▀▀  █▀▀  \n" +
+            "▀   ▀ ▀▀▀ ▀▀▀▀ ▀  ▀ ▀▀▀  ▀  ▀ ▀  ▀ ▀  ▀ ▀▀▀▀ ▀▀▀▀ ▀    ";
+
+        const arrow: string | undefined = "↪".codePointAt(0)?.toString(16);
+        const infoLine: string = `\x1b[91m » \x1b[37ma discord chatbot by \x1b[91m@carefreebomb`;
+        
+        client.logger.logWithoutTime(asciiText2);
+        client.logger.logWithoutTime(infoLine);
         client.logger.bar();
 
         if (client.shouldRegisterCommands) {
