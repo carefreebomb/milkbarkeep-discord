@@ -102,6 +102,7 @@ export class SteamApiManager {
         filterOutLocked: boolean = true): Promise<UserAchievements | null> {
         try {
             const gameAchievements: UserAchievements = await this.steam.getUserAchievements(userId, appId);
+
             if (filterOutLocked === true) {
                 gameAchievements.achievements = gameAchievements.achievements.filter(a => a.unlocked);
             }
@@ -160,43 +161,49 @@ export class SteamApiManager {
         const userRecentAchievements: SteamAchievementCombinedData[] = [];
         try {
             for (const currentGame of gamesToCheck.values()) {
-                const userGameResults: UserAchievements | null = await this.getUserAchievements(userId, currentGame.id, minutesToLookBack);
+                try {
+                    const userGameResults: UserAchievements | null = await this.getUserAchievements(userId, currentGame.id, minutesToLookBack);
 
-                // If there is achievement data, merge everything as one formatted object
-                if (userGameResults) {
-                    for (const userAchievement of userGameResults.achievements) {
-                        const dataAchievement = currentGame.data?.find(
-                            a => a.internal_name === userAchievement.name
-                        );
+                    // If there is achievement data, merge everything as one formatted object
+                    if (userGameResults && Object.keys(userGameResults).length > 0) {
+                        for (const userAchievement of userGameResults.achievements) {
+                            const dataAchievement = currentGame.data?.find(
+                                a => a.internal_name === userAchievement.name
+                            );
 
-                        const data: SteamAchievementCombinedData = {
-                            user: {
-                                id: userId,
-                                displayName: userSummary.nickname,
-                                url: userSummary.url,
-                                avatar: userSummary.avatar.small,
-                            },
-                            achievement: {
-                                timestamp: userAchievement.unlockedTimestamp ?? 0,
-                                name: userAchievement.name,
-                                displayName: dataAchievement?.localized_name ?? " ",
-                                description: dataAchievement?.localized_desc ?? " ",
-                                hidden: Boolean(dataAchievement?.hidden) ?? false,
-                                icon: `https://shared.akamai.steamstatic.com/community_assets/images/apps/${currentGame.id}/${dataAchievement?.icon}`,
-                                playerPercent: dataAchievement?.player_percent_unlocked ?? " ",
-                            },
-                            app: {
-                                id: currentGame.id,
-                                name: currentGame.name,
-                            }
-                        };
-                        userRecentAchievements.push(data);
+                            const data: SteamAchievementCombinedData = {
+                                user: {
+                                    id: userId,
+                                    displayName: userSummary.nickname,
+                                    url: userSummary.url,
+                                    avatar: userSummary.avatar.small,
+                                },
+                                achievement: {
+                                    timestamp: userAchievement.unlockedTimestamp ?? 0,
+                                    name: userAchievement.name,
+                                    displayName: dataAchievement?.localized_name ?? " ",
+                                    description: dataAchievement?.localized_desc ?? " ",
+                                    hidden: Boolean(dataAchievement?.hidden) ?? false,
+                                    icon: `https://shared.akamai.steamstatic.com/community_assets/images/apps/${currentGame.id}/${dataAchievement?.icon}`,
+                                    playerPercent: dataAchievement?.player_percent_unlocked ?? " ",
+                                },
+                                app: {
+                                    id: currentGame.id,
+                                    name: currentGame.name,
+                                }
+                            };
+                            userRecentAchievements.push(data);
+                        }
                     }
+                } catch (error: unknown) {
+                    // Remember that time that a demo for a game not out yet had its own store page and also  
+                    // had achievements but the player data for said achievements returned an empty set?
+                    this.clientRef.logger.stm(`Failed to retrieve data for ${userSummary.nickname} (${userId}) in ${currentGame.name} (${currentGame.id})`);
                 }
             }
         } catch (error: unknown) {
             // Likely a Forbidden error, aka permissions issue
-            this.clientRef.logger.stm(`Failed to retrieve achievement data for userId: ${userId} -  ${error}`);
+            this.clientRef.logger.stm(`Failed to retrieve data for userId: ${userId} -  ${error}`);
             return null;
         }
         return userRecentAchievements;
